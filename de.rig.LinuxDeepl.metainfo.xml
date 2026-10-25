@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>de.rig.LinuxDeepl</id>
+  <name>LinuxDeepl</name>
+  <summary>DeepL-Übersetzer für Linux</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <description>
+    <p>Ein einfacher DeepL-Client für Linux.</p>
+  </description>
+  <launchable type="desktop-id">de.rig.LinuxDeepl.desktop</launchable>
+  <icon type="stock">de.rig.LinuxDeepl</icon>
+  <releases>
+    <release version="0.1" date="2026-10-25"/>
+  </releases>
+</component>
