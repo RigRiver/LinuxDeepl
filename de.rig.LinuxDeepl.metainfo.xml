@@ -13,4 +13,30 @@
   <releases>
     <release version="0.1" date="2026-10-25"/>
   </releases>
+  <screenshots>
+  <screenshot type="default">
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/0_default.png</image>
+    <caption>Hauptansicht</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/1_de-en.png</image>
+    <caption>Deutsch nach Englisch</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/2_en-de.png</image>
+    <caption>Englisch nach Deutsch</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/3_en-rus.png</image>
+    <caption>Englisch nach Russisch</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/4_rus-nor.png</image>
+    <caption>Russisch nach Norwegisch</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/5_nor-de.png</image>
+    <caption>Norwegisch nach Deutsch</caption>
+  </screenshot>
+</screenshots>
 </component>
