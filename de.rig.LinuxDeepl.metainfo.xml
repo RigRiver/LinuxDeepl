@@ -3,13 +3,21 @@
   <id>de.rig.LinuxDeepl</id>
   <name>LinuxDeepl</name>
   <summary>DeepL-Übersetzer für Linux</summary>
+  <url type="homepage">https://github.com/RigRiver/LinuxDeepl</url>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
+    <content_rating type="oars-1.0">
+    <content_attribute id="language-humor">mild</content_attribute>
+  </content_rating>
+  <developer id="de.rig">
+    <name>RigRiver - alias Rig + Deek</name>
+  </developer>
   <description>
-    <p>Ein einfacher DeepL-Client für Linux.</p>
+    <p>Ein Übersetzungsprogramm das DeepL für Linux nutzt.</p>
+    <p>Entstanden weil DeepL liefert bei europäischen Sprachen natürlichere, idiomatischere und präzisere Übersetzungen als die Konkurrenz,</p>
+    <p> da es speziell für diesen Zweck entwickelt wurde und neuronale Netze mit hochwertigen Daten von Linguee nutzt.</p> 
   </description>
   <launchable type="desktop-id">de.rig.LinuxDeepl.desktop</launchable>
-  <icon type="stock">de.rig.LinuxDeepl</icon>
   <releases>
     <release version="0.1" date="2026-10-25"/>
   </releases>
