@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_LinuxDeepl_FILE /home/limac/Schreibtisch/Programmieren/Apps/LInuxDeepl./LinuxDeepl/build/Desktop_Debug/LinuxDeepl)
-set(__QT_DEPLOY_TARGET_LinuxDeepl_TYPE EXECUTABLE)
