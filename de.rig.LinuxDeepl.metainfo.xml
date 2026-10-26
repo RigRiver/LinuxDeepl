@@ -14,8 +14,7 @@
   </developer>
   <description>
     <p>Ein Übersetzungsprogramm das DeepL für Linux nutzt.</p>
-    <p>Entstanden weil DeepL liefert bei europäischen Sprachen natürlichere, idiomatischere und präzisere Übersetzungen als die Konkurrenz,</p>
-    <p> da es speziell für diesen Zweck entwickelt wurde und neuronale Netze mit hochwertigen Daten von Linguee nutzt.</p> 
+    <p>Entstanden weil DeepL liefert bei europäischen Sprachen natürlichere, idiomatischere und präzisere Übersetzungen als die Konkurrenz, da es speziell für diesen Zweck entwickelt wurde und neuronale Netze mit hochwertigen Daten von Linguee nutzt.</p> 
   </description>
   <launchable type="desktop-id">de.rig.LinuxDeepl.desktop</launchable>
   <releases>
