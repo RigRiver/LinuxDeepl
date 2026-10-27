@@ -10,8 +10,23 @@
     <content_attribute id="language-humor">mild</content_attribute>
   </content_rating>
   <developer id="de.rig">
-    <name>RigRiver - alias Rig + Deek</name>
+    <name>RigRivers - alias Rig + Deek</name>
   </developer>
+  <keywords>
+    <keyword>Übersetzer</keyword>
+    <keyword>übersetzen</keyword>
+    <keyword>Übersetzung</keyword>
+    <keyword>Rig</keyword>
+    <keyword>Rivers</keyword>
+    <keyword>Deek</keyword>
+    <keyword>DeepL</keyword>
+    <keyword>translator</keyword>
+    <keyword>translate</keyword>
+    <keyword>translation</keyword>
+    <keyword>language</keyword>
+    <keyword>Sprachen</keyword>
+    <keyword>Sprache</keyword>
+  </keywords>
   <description>
     <p>Ein Übersetzungsprogramm das DeepL für Linux nutzt.</p>
     <p>Entstanden weil DeepL liefert bei europäischen Sprachen natürlichere, idiomatischere und präzisere Übersetzungen als die Konkurrenz, da es speziell für diesen Zweck entwickelt wurde und neuronale Netze mit hochwertigen Daten von Linguee nutzt.</p> 

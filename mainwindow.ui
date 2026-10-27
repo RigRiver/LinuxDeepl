@@ -641,7 +641,7 @@
      <enum>QLCDNumber::SegmentStyle::Flat</enum>
     </property>
     <property name="intValue" stdset="0">
-     <number>500000</number>
+     <number>0</number>
     </property>
    </widget>
    <widget class="QLabel" name="Konstrukteure">
