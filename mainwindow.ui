@@ -676,6 +676,112 @@
      <string>Abo</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_aussprechen_von">
+    <property name="geometry">
+     <rect>
+      <x>145</x>
+      <y>232</y>
+      <width>120</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>87</red>
+          <green>227</green>
+          <blue>137</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>87</red>
+          <green>227</green>
+          <blue>137</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>87</red>
+          <green>227</green>
+          <blue>137</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="text">
+     <string>aussprechen</string>
+    </property>
+    <property name="icon">
+     <iconset theme="QIcon::ThemeIcon::AudioVolumeHigh"/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_aussprechen_nach">
+    <property name="geometry">
+     <rect>
+      <x>455</x>
+      <y>232</y>
+      <width>120</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>87</red>
+          <green>227</green>
+          <blue>137</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>87</red>
+          <green>227</green>
+          <blue>137</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>87</red>
+          <green>227</green>
+          <blue>137</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="text">
+     <string>aussprechen</string>
+    </property>
+    <property name="icon">
+     <iconset theme="QIcon::ThemeIcon::AudioVolumeHigh"/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

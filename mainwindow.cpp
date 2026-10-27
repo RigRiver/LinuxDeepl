@@ -30,6 +30,9 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
+#include <QTextToSpeech>
+#include <QVoice>
+
 struct Lang { const char *code; const char *name; };
 
 static const QVector<Lang> sourceLangs = {
@@ -73,10 +76,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->fortschritt->setRange(0, 0);   // indeterminate
     ui->translate->setEnabled(false);
     ui->lcdNr_akt->display(0);
+    ui->btn_aussprechen_von->setEnabled(false);
+    ui->btn_aussprechen_nach->setEnabled(false);
 
     populateLanguages();
 
     m_network = new QNetworkAccessManager(this);
+    m_speech = new QTextToSpeech(this);
 
     // Signale
     connect(ui->swap,          &QPushButton::clicked, this, &MainWindow::onSwap);
@@ -88,6 +94,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->clear_txt_nach,&QPushButton::clicked, this, &MainWindow::onClearTo);
     connect(ui->save_as,       &QPushButton::clicked, this, &MainWindow::onSave);
     connect(ui->txt_von, &QPlainTextEdit::textChanged, this, &MainWindow::onInputChanged);
+    connect(ui->btn_aussprechen_von, &QPushButton::clicked, this, &MainWindow::onSpeakFrom);
+    connect(ui->btn_aussprechen_nach, &QPushButton::clicked, this, &MainWindow::onSpeakTo);
+    // Buttons aktivieren/deaktivieren bei Textänderung
+    connect(ui->txt_von, &QPlainTextEdit::textChanged, this, [this]() {
+        ui->btn_aussprechen_von->setEnabled(!ui->txt_von->toPlainText().trimmed().isEmpty());
+    });
+    connect(ui->txt_nach, &QPlainTextEdit::textChanged, this, [this]() {
+        ui->btn_aussprechen_nach->setEnabled(!ui->txt_nach->toPlainText().trimmed().isEmpty());
+    });
 
     readSettings();
 
@@ -141,6 +156,63 @@ void MainWindow::onSwap()
     ui->txt_nach->setPlainText(in);
 
     statusBar()->showMessage(tr("Sprachen und Text getauscht"));
+}
+
+void MainWindow::onSpeakFrom()
+{
+    const QString text = ui->txt_von->toPlainText().trimmed();
+    if (text.isEmpty()) return;
+
+    if (m_speech->state() == QTextToSpeech::Speaking) {
+        m_speech->stop();
+        return;
+    }
+
+    // Sprache aus der Quell-ComboBox
+    const QString langCode = ui->language_von->currentData().toString();
+    if (langCode != "auto") {
+        QLocale locale(langCode.toLower());
+        const QList<QVoice> voices = m_speech->availableVoices();
+        for (const QVoice &voice : voices) {
+            if (voice.locale().language() == locale.language()) {
+                m_speech->setVoice(voice);
+                break;
+            }
+        }
+    }
+
+    m_speech->say(text);
+    statusBar()->showMessage(tr("Lese Eingabe vor…"));
+}
+
+void MainWindow::onSpeakTo()
+{
+    const QString text = ui->txt_nach->toPlainText().trimmed();
+    if (text.isEmpty()) return;
+
+    if (m_speech->state() == QTextToSpeech::Speaking) {
+        m_speech->stop();
+        return;
+    }
+
+    // Sprache aus der Ziel-ComboBox
+    const QString langCode = ui->language_nach->currentData().toString();
+    // DeepL-Codes wie "EN-US" oder "PT-BR" auf den Sprachteil kürzen
+    QString baseCode = langCode;
+    const int dash = baseCode.indexOf('-');
+    if (dash > 0) baseCode = baseCode.left(dash);
+
+    QLocale locale(baseCode.toLower());
+    const QList<QVoice> voices = m_speech->availableVoices();
+    for (const QVoice &voice : voices) {
+        if (voice.locale().language() == locale.language()) {
+            m_speech->setVoice(voice);
+            break;
+        }
+    }
+
+    m_speech->say(text);
+    statusBar()->showMessage(tr("Lese Übersetzung vor…"));
 }
 
 void MainWindow::onOpenAboPage()

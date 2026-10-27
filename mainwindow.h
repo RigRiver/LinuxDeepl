@@ -6,6 +6,7 @@ namespace Ui { class MainWindow; }
 class QNetworkAccessManager;
 class QNetworkReply;
 class QCloseEvent;
+class QTextToSpeech;
 
 class MainWindow : public QMainWindow
 {
@@ -31,6 +32,9 @@ private slots:
     void onTranslateReplyFinished(QNetworkReply *reply);
     void onUsageReplyFinished(QNetworkReply *reply);
 
+    void onSpeakFrom();
+    void onSpeakTo();
+
 private:
     void populateLanguages();
     void readSettings();
@@ -40,6 +44,8 @@ private:
     void handleNetworkError(QNetworkReply *reply);
     void setBusy(bool busy);
     void updateTranslateEnabled();
+
+    QTextToSpeech *m_speech = nullptr;
 
     Ui::MainWindow         *ui;
     QNetworkAccessManager  *m_network = nullptr;
