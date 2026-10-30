@@ -1,3 +1,8 @@
+/*
+g++ -std=c++17 -fPIC main.cpp mainwindow.cpp moc_mainwindow.cpp -o LinuxDeepl -I. $(pkg-config --cflags --libs Qt6Widgets Qt6Network Qt6TextToSpeech)
+spd-say -l is "aún guardas la foto
+eso es que te dejo un buen recuerdo"
+*/
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -19,6 +24,11 @@
 #include <QStatusBar>
 #include <QCloseEvent>
 #include <QVector>
+#include <QProcess>
+#include <QThread>
+#include <QDir>
+#include <QFile>
+#include <QTextStream>
 
 #include <QDesktopServices>
 #include <QUrl>
@@ -168,21 +178,39 @@ void MainWindow::onSpeakFrom()
         return;
     }
 
-    // Sprache aus der Quell-ComboBox
-    const QString langCode = ui->language_von->currentData().toString();
-    if (langCode != "auto") {
-        QLocale locale(langCode.toLower());
-        const QList<QVoice> voices = m_speech->availableVoices();
-        for (const QVoice &voice : voices) {
-            if (voice.locale().language() == locale.language()) {
-                m_speech->setVoice(voice);
-                break;
-            }
-        }
+    QString langCode = ui->language_von->currentData().toString();
+    const int dash = langCode.indexOf('-');
+    if (dash > 0) langCode = langCode.left(dash);
+    langCode = langCode.toLower();
+
+    writePiperConf(langCode);
+
+    // QTextToSpeech neu erstellen
+    delete m_speech;
+    m_speech = new QTextToSpeech(this);
+
+    // Locale auf Zielsprache setzen
+    QString localeCode = langCode;
+    if (langCode == "de") localeCode = "de_DE";
+    else if (langCode == "is") localeCode = "is_IS";
+    else if (langCode == "fa") localeCode = "fa_IR";
+    else if (langCode == "ka") localeCode = "ka_GE";
+    else if (langCode == "kk") localeCode = "kk_KZ";
+    else if (langCode == "ne") localeCode = "ne_NP";
+    else if (langCode == "sw") localeCode = "sw_CD";
+    else if (langCode == "vi") localeCode = "vi_VN";
+
+    m_speech->setLocale(QLocale(localeCode));
+
+    // Warten, bis die Stimme da ist (max. 10 Sekunden)
+    for (int i = 0; i < 50; ++i) {
+        if (!m_speech->availableVoices().isEmpty())
+            break;
+        QThread::msleep(200);
     }
 
     m_speech->say(text);
-    statusBar()->showMessage(tr("Lese Eingabe vor…"));
+    statusBar()->showMessage(tr("Lese Übersetzung vor…"));
 }
 
 void MainWindow::onSpeakTo()
@@ -195,24 +223,109 @@ void MainWindow::onSpeakTo()
         return;
     }
 
-    // Sprache aus der Ziel-ComboBox
-    const QString langCode = ui->language_nach->currentData().toString();
-    // DeepL-Codes wie "EN-US" oder "PT-BR" auf den Sprachteil kürzen
-    QString baseCode = langCode;
-    const int dash = baseCode.indexOf('-');
-    if (dash > 0) baseCode = baseCode.left(dash);
+    QString langCode = ui->language_nach->currentData().toString();
+    const int dash = langCode.indexOf('-');
+    if (dash > 0) langCode = langCode.left(dash);
+    langCode = langCode.toLower();
 
-    QLocale locale(baseCode.toLower());
-    const QList<QVoice> voices = m_speech->availableVoices();
-    for (const QVoice &voice : voices) {
-        if (voice.locale().language() == locale.language()) {
-            m_speech->setVoice(voice);
+    writePiperConf(langCode);
+
+    // QTextToSpeech neu erstellen
+    delete m_speech;
+    m_speech = new QTextToSpeech(this);
+
+    // Locale auf Zielsprache setzen
+    QString localeCode = langCode;
+    if (langCode == "de") localeCode = "de_DE";
+    else if (langCode == "is") localeCode = "is_IS";
+    else if (langCode == "fa") localeCode = "fa_IR";
+    else if (langCode == "ka") localeCode = "ka_GE";
+    else if (langCode == "kk") localeCode = "kk_KZ";
+    else if (langCode == "ne") localeCode = "ne_NP";
+    else if (langCode == "sw") localeCode = "sw_CD";
+    else if (langCode == "vi") localeCode = "vi_VN";
+
+    m_speech->setLocale(QLocale(localeCode));
+
+    // Warten, bis die Stimme da ist (max. 10 Sekunden)
+    for (int i = 0; i < 50; ++i) {
+        if (!m_speech->availableVoices().isEmpty())
             break;
-        }
+        QThread::msleep(200);
     }
 
     m_speech->say(text);
     statusBar()->showMessage(tr("Lese Übersetzung vor…"));
+}
+
+void MainWindow::writePiperConf(const QString &langCode)
+{
+    // Prüfen, ob sich die .conf ändern würde
+    static QString lastLangCode;
+    if (langCode == lastLangCode) {
+        return;  // Keine Änderung, kein Neustart nötig
+    }
+    lastLangCode = langCode;
+    QString conf;
+
+    if (langCode == "de") {
+        conf = R"(GenericExecuteSynth "export XDATA=\'$DATA\'; echo \"$XDATA\" | iconv -f ISO-8859-1 -t UTF-8 | sed -z 's/\\n/ /g' | /home/limac/miniconda3/bin/piper --model /home/limac/Schreibtisch/Programmieren/Apps/LInuxDeepl./LinuxDeepl/models/de_DE-karlsson-low.onnx --output-raw | aplay -r 16000 -f S16_LE -t raw -"
+AddVoice "de_DE" "MALE1" "Karlsson"
+DefaultVoice "Karlsson"
+)";
+    } else if (langCode == "fa") {
+        conf = R"(GenericExecuteSynth "export XDATA=\'$DATA\'; echo \"$XDATA\" | iconv -f ISO-8859-1 -t UTF-8 | sed -z 's/\\n/ /g' | /home/limac/miniconda3/bin/piper --model /home/limac/Schreibtisch/Programmieren/Apps/LInuxDeepl./LinuxDeepl/models/fa_IR-gyro-medium.onnx --output-raw | aplay -r 22050 -f S16_LE -t raw -"
+AddVoice "fa_IR" "MALE1" "Gyro"
+DefaultVoice "Gyro"
+)";
+    } else if (langCode == "is") {
+        conf = R"(GenericExecuteSynth "export XDATA=\'$DATA\'; echo \"$XDATA\" | iconv -f ISO-8859-1 -t UTF-8 | sed -z 's/\\n/ /g' | /home/limac/miniconda3/bin/piper --model /home/limac/Schreibtisch/Programmieren/Apps/LInuxDeepl./LinuxDeepl/models/is_IS-steinn-medium.onnx --output-raw | aplay -r 22050 -f S16_LE -t raw -"
+AddVoice "is_IS" "MALE1" "Steinn"
+DefaultVoice "Steinn"
+)";
+    } else if (langCode == "ka") {
+        conf = R"(GenericExecuteSynth "export XDATA=\'$DATA\'; echo \"$XDATA\" | iconv -f ISO-8859-1 -t UTF-8 | sed -z 's/\\n/ /g' | /home/limac/miniconda3/bin/piper --model /home/limac/Schreibtisch/Programmieren/Apps/LInuxDeepl./LinuxDeepl/models/ka_GE-natia-medium.onnx --output-raw | aplay -r 22050 -f S16_LE -t raw -"
+AddVoice "ka_GE" "FEMALE1" "Natia"
+DefaultVoice "Natia"
+)";
+    } else if (langCode == "kk") {
+        conf = R"(GenericExecuteSynth "export XDATA=\'$DATA\'; echo \"$XDATA\" | iconv -f ISO-8859-1 -t UTF-8 | sed -z 's/\\n/ /g' | /home/limac/miniconda3/bin/piper --model /home/limac/Schreibtisch/Programmieren/Apps/LInuxDeepl./LinuxDeepl/models/kk_KZ-issai-high.onnx --output-raw | aplay -r 22050 -f S16_LE -t raw -"
+AddVoice "kk_KZ" "MALE1" "Issai"
+DefaultVoice "Issai"
+)";
+    } else if (langCode == "ne") {
+        conf = R"(GenericExecuteSynth "export XDATA=\'$DATA\'; echo \"$XDATA\" | iconv -f ISO-8859-1 -t UTF-8 | sed -z 's/\\n/ /g' | /home/limac/miniconda3/bin/piper --model /home/limac/Schreibtisch/Programmieren/Apps/LInuxDeepl./LinuxDeepl/models/ne_NP-google-medium.onnx --output-raw | aplay -r 22050 -f S16_LE -t raw -"
+AddVoice "ne_NP" "FEMALE1" "Google"
+DefaultVoice "Google"
+)";
+    } else if (langCode == "sw") {
+        conf = R"(GenericExecuteSynth "export XDATA=\'$DATA\'; echo \"$XDATA\" | iconv -f ISO-8859-1 -t UTF-8 | sed -z 's/\\n/ /g' | /home/limac/miniconda3/bin/piper --model /home/limac/Schreibtisch/Programmieren/Apps/LInuxDeepl./LinuxDeepl/models/sw_CD-lanfrica-medium.onnx --output-raw | aplay -r 22050 -f S16_LE -t raw -"
+AddVoice "sw_CD" "MALE1" "Lanfrica"
+DefaultVoice "Lanfrica"
+)";
+    } else if (langCode == "vi") {
+        conf = R"(GenericExecuteSynth "export XDATA=\'$DATA\'; echo \"$XDATA\" | iconv -f ISO-8859-1 -t UTF-8 | sed -z 's/\\n/ /g' | /home/limac/miniconda3/bin/piper --model /home/limac/Schreibtisch/Programmieren/Apps/LInuxDeepl./LinuxDeepl/models/vi_VN-vais1000-medium.onnx --output-raw | aplay -r 22050 -f S16_LE -t raw -"
+AddVoice "vi_VN" "MALE1" "Vais1000"
+DefaultVoice "Vais1000"
+)";
+    } else {
+        // Fallback: Karlsson (Deutsch)
+        conf = R"(GenericExecuteSynth "export XDATA=\'$DATA\'; echo \"$XDATA\" | iconv -f ISO-8859-1 -t UTF-8 | sed -z 's/\\n/ /g' | /home/limac/miniconda3/bin/piper --model /home/limac/Schreibtisch/Programmieren/Apps/LInuxDeepl./LinuxDeepl/models/de_DE-karlsson-low.onnx --output-raw | aplay -r 16000 -f S16_LE -t raw -"
+AddVoice "de_DE" "MALE1" "Karlsson"
+DefaultVoice "Karlsson"
+)";
+    }
+    const QString confPath = QDir::homePath() + "/.config/speech-dispatcher/modules/piper.conf";
+    // Datei schreiben
+    QFile file(confPath);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << conf;
+        file.close();
+    }
+
+    // Speech Dispatcher neu starten
+    QProcess::execute("systemctl", {"--user", "restart", "speech-dispatcher"});
 }
 
 void MainWindow::onOpenAboPage()

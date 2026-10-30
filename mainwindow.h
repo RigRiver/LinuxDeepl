@@ -26,6 +26,7 @@ private slots:
     void onCopyTo();
     void onClearFrom();
     void onClearTo();
+    void writePiperConf(const QString &langCode);
     void onSave();
     void onInputChanged();
 

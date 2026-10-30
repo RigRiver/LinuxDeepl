@@ -6,6 +6,12 @@ sdk: org.kde.Sdk
 command: LinuxDeepl
 
 finish-args:
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --filesystem
+  - --filesystem=xdg-run/speech-dispatcher:ro
   # Netzwerkzugriff für die DeepL-API
   - --share=network
   # Grafik-Sockets (X11 & Wayland)
