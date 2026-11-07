@@ -2,12 +2,9 @@
 
 LinuxDeepl ist ein DeepL-Übersetzer für Linux mit grafischer Oberfläche und Sprachausgabe.
 
-<<<<<<< HEAD
 **LinuxDeepl ist ein inoffizieller Client und steht in keiner Verbindung zur DeepL SE.**
-=======
->>>>>>> e588dee69f97985eded20f33aedc3b43ea9862d2
-![LinuxDeepl Icon](de.rig.LinuxDeepl.png)
 
+![LinuxDeepl Icon](de.rig.LinuxDeepl.png)
 ## Was ist LinuxDeepl?
 
 LinuxDeepl ist ein DeepL-Übersetzer für Linux mit grafischer Oberfläche. Die App nutzt die DeepL-API, um Texte zwischen vielen Sprachen zu übersetzen. Sie läuft als Flatpak auf jedem Linux-System mit Flatpak-Unterstützung und erscheint in der GNOME-Software.
