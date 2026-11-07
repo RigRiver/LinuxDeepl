@@ -1,0 +1,9 @@
+build/
+build-flatpak/
+.flatpak-builder/
+*.flatpak
+
+.qtcreator/
+*~
+docs/
+mein-repo/

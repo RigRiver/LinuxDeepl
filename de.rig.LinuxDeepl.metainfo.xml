@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>de.rig.LinuxDeepl</id>
+  <name>LinuxDeepl</name>
+  <summary>DeepL-Übersetzer für Linux</summary>
+  <url type="homepage">https://github.com/RigRiver/LinuxDeepl</url>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+    <content_rating type="oars-1.0">
+    <content_attribute id="language-humor">mild</content_attribute>
+  </content_rating>
+  <developer id="de.rig">
+    <name>RigRivers - alias Rig + Deek</name>
+  </developer>
+  <keywords>
+    <keyword>Übersetzer</keyword>
+    <keyword>übersetzen</keyword>
+    <keyword>Übersetzung</keyword>
+    <keyword>Rig</keyword>
+    <keyword>Rivers</keyword>
+    <keyword>RigRivers</keyword>
+    <keyword>Pinguin</keyword>
+    <keyword>penguin</keyword>
+    <keyword>Deek</keyword>
+    <keyword>DeepL</keyword>
+    <keyword>translator</keyword>
+    <keyword>translate</keyword>
+    <keyword>translation</keyword>
+    <keyword>language</keyword>
+    <keyword>Sprachen</keyword>
+    <keyword>Sprache</keyword>
+  </keywords>
+  <description>
+    <p>Ein Übersetzungsprogramm das DeepL für Linux nutzt.</p>
+    <p>Entstanden weil DeepL liefert bei europäischen Sprachen natürlichere, idiomatischere und präzisere Übersetzungen als die Konkurrenz, da es speziell für diesen Zweck entwickelt wurde und neuronale Netze mit hochwertigen Daten von Linguee nutzt.</p> 
+  </description>
+  <launchable type="desktop-id">de.rig.LinuxDeepl.desktop</launchable>
+  <releases>
+    <release version="0.1" date="2026-10-25"/>
+  </releases>
+  <screenshots>
+  <screenshot type="default">
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/0_default.png</image>
+    <caption>Hauptansicht</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/1_de-esp_a.png</image>
+    <caption>Deutsch nach Spanisch</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/2_esp-kor_b.png</image>
+    <caption>Spanisch nach Koreanisch</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/3_kor-fin_c.png</image>
+    <caption>Koreanisch nach Finnisch</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/4_fin-rus_d.png</image>
+    <caption>Finnisch nach Russisch</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/5_rus-ara_e.png</image>
+    <caption>Russisch nach Arabisch</caption>
+  </screenshot>
+  <screenshot>
+    <image>https://raw.githubusercontent.com/RigRiver/LinuxDeepl/main/screenshots/6_ara-de_f.png</image>
+    <caption>Arabisch nach Deutsch</caption>
+  </screenshot>
+</screenshots>
+</component>

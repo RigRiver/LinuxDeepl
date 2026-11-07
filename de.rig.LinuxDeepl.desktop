@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=LinuxDeepl
+Comment=DeepL-Übersetzer für Linux
+Exec=LinuxDeepl
+Icon=de.rig.LinuxDeepl
+Terminal=false
+Type=Application
+Categories=Utility;Network;
